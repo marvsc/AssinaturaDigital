@@ -11,4 +11,4 @@ class assinaturadigitalTestConan(ConanFile):
 
     def test(self):
         if can_run(self):
-            self.run("assinaturadigital -x resources/pkcs12/certificado_teste_hub.pfx -p bry123456 -f resources/arquivos/doc.txt -o resources/arquivos/sinature.p7s", env="conanrun")
+            self.run("assinaturadigital -x resources/pkcs12/certificado_teste_hub.pfx -p bry123456 -f resources/arquivos/doc.txt -o resources/arquivos/signature.p7s", env="conanrun")
