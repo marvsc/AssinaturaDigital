@@ -5,8 +5,8 @@
  *      Author: marcus
  */
 
-#ifndef SRC_CMSSIGNER_H_
-#define SRC_CMSSIGNER_H_
+#ifndef INCLUDE_CMSSIGNER_H_
+#define INCLUDE_CMSSIGNER_H_
 
 #include <memory>
 #include <string>
@@ -36,4 +36,4 @@ private:
     std::unique_ptr<EVP_PKEY, void(*)(EVP_PKEY*)> private_key_;
 };
 
-#endif /* SRC_CMSSIGNER_H_ */
+#endif /* INCLUDE_CMSSIGNER_H_ */

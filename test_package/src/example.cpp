@@ -1,9 +1,8 @@
-#include "PKCS12Parser.h"
-#include "CMSSigner.h"
-
 #include <unistd.h>
 
 #include <string>
+#include "CMSSigner.h"
+#include "PKCS12Parser.h"
 
 int main(const int argc, char *const argv[]) {
     int opt;

@@ -5,8 +5,8 @@
  *      Author: marcus
  */
 
-#ifndef SRC_PKCS12PARSER_H_
-#define SRC_PKCS12PARSER_H_
+#ifndef INCLUDE_PKCS12PARSER_H_
+#define INCLUDE_PKCS12PARSER_H_
 
 #include <memory>
 #include <string>
@@ -40,4 +40,4 @@ private:
     std::unique_ptr<EVP_PKEY, void(*)(EVP_PKEY*)> private_key_;
 };
 
-#endif /* SRC_PKCS12PARSER_H_ */
+#endif /* INCLUDE_PKCS12PARSER_H_ */
