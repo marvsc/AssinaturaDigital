@@ -10,8 +10,8 @@ class assinaturadigitalRecipe(ConanFile):
     # Optional metadata
     license = ""
     author = "Marcus Chaves"
-    url = ""
-    description = "<Description of assinaturadigital package here>"
+    url = "git@github.com:marvsc/AssinaturaDigital.git"
+    description = "Realiza assinatura digital utilizando algoritmo CMS attached"
     topics = ("", "", "")
 
     # Binary configuration
@@ -53,4 +53,5 @@ class assinaturadigitalRecipe(ConanFile):
 
     def package_info(self):
         self.cpp_info.libs = ["assinaturadigital"]
+        self.cpp_info.includedirs = ["include"]
 

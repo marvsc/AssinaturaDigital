@@ -15,11 +15,11 @@
 
 class PKCS12Parser {
 public:
-    PKCS12Parser();
-    PKCS12Parser(const std::string &pkcs12_file_path);
+    PKCS12Parser() : pkcs12_file_path_(""), password_("") {}
+    PKCS12Parser(const std::string &pkcs12_file_path) : pkcs12_file_path_(pkcs12_file_path), password_("") {}
     PKCS12Parser(const std::string &pkcs12_file_path,
-            const std::string &password);
-    virtual ~PKCS12Parser();
+            const std::string &password) : pkcs12_file_path_(pkcs12_file_path), password_(password) {}
+    virtual ~PKCS12Parser() {}
     void set_pkcs12_file_path(const std::string &pkcs12_file_path) {
         pkcs12_file_path_ = pkcs12_file_path;
     }
@@ -27,17 +27,17 @@ public:
         password_ = password;
     }
     void parse();
-    X509* get_certificate() {
-        return certificate_.release();
+    std::shared_ptr<X509> get_certificate() {
+        return certificate_;
     }
-    EVP_PKEY* get_private_key() {
-        return private_key_.release();
+    std::shared_ptr<EVP_PKEY> get_private_key() {
+        return private_key_;
     }
 private:
     std::string pkcs12_file_path_;
     std::string password_;
-    std::unique_ptr<X509, void(*)(X509*)> certificate_;
-    std::unique_ptr<EVP_PKEY, void(*)(EVP_PKEY*)> private_key_;
+    std::shared_ptr<X509> certificate_;
+    std::shared_ptr<EVP_PKEY> private_key_;
 };
 
 #endif /* INCLUDE_PKCS12PARSER_H_ */
