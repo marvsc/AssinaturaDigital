@@ -30,10 +30,13 @@ public:
         private_key_ = private_key;
     }
     void assign(const std::string &signature_file) const;
+    std::string assign() const;
 private:
     std::string file_to_assign_;
     std::weak_ptr<X509> certificate_;
     std::weak_ptr<EVP_PKEY> private_key_;
+
+    void assign(BIO* buffer) const;
 };
 
 #endif /* INCLUDE_CMSSIGNER_H_ */
