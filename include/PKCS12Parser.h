@@ -38,6 +38,8 @@ private:
     std::string password_;
     std::shared_ptr<X509> certificate_;
     std::shared_ptr<EVP_PKEY> private_key_;
+
+    void openssl_error_handling(const char* prefix) const;
 };
 
 #endif /* INCLUDE_PKCS12PARSER_H_ */
