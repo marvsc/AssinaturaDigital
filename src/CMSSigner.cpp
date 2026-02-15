@@ -45,7 +45,8 @@ void CMSSigner::assign(const std::string &signature_file) const {
 }
 
 std::string CMSSigner::assign() const {
-    std::unique_ptr<BIO, decltype(&BIO_vfree)> memory_buffer(BIO_new(BIO_s_mem()), BIO_vfree);
+    std::unique_ptr<BIO, decltype(&BIO_free_all)> memory_buffer(BIO_push(BIO_new(BIO_f_base64()), BIO_new(BIO_s_mem())), BIO_free_all);
+    BIO_set_flags(memory_buffer.get(), BIO_FLAGS_BASE64_NO_NL);
     assign(memory_buffer.get());
     BUF_MEM* buffer_pointer = nullptr;
     BIO_get_mem_ptr(memory_buffer.get(), &buffer_pointer);
