@@ -27,11 +27,11 @@ public:
 
     /*
      * @brief Constrói a classe a partir de um path para um arquivo a ser assinado,
-     *          um certificado e uma chave primária
+     *          um certificado e uma chave privada.
      *
      * @param[in] file_to_assign Path completo para o arquivo a ser assinado.
      * @param[in] certificate Certificado X509.
-     * @param[in] private_key Chave primária.
+     * @param[in] private_key Chave privada.
      */
     CMSSigner(const std::string &file_to_assign, std::shared_ptr<X509> certificate,
             std::shared_ptr<EVP_PKEY> private_key);
@@ -39,24 +39,65 @@ public:
     /*
      * @brief Destrói a classe.
      */
-    virtual ~CMSSigner() {
-    }
+    virtual ~CMSSigner() {}
+
+    /*
+     * @brief Define o path para o arquivo a ser assinado.
+     *
+     * @param[in] file_to_assign Path completo para o arquivo a ser assinado.
+     */
     void set_file_to_assign(const std::string &file_to_assign) {
         file_to_assign_ = file_to_assign;
     }
+
+    /*
+     * @brief Define o certificado X509.
+     *
+     * @param[in] certificate Certificado X509.
+     */
     void set_certificate(std::shared_ptr<X509> certificate) {
         certificate_ = certificate;
     }
+
+    /*
+     * @brief Define a chave privada.
+     *
+     * @param[in] private_key Chave privada.
+     */
     void set_private_key(std::shared_ptr<EVP_PKEY> private_key) {
         private_key_ = private_key;
     }
+
+    /*
+     * @brief Assina o arquivo definido no atributo file_to_assign_ e gera um aquivo
+     *          de assinatura.
+     *
+     * @param[in] signature_file Path completo onde o arquivo de assinatura deve
+     *                              ser gerado.
+     */
     void assign(const std::string &signature_file) const;
+
+    /*
+     * @brief Assina o arquivo definido no atributo file_to_assign_ e retorna a
+     *          assinatura CMS codificada em base 64.
+     *
+     * @return Assinatura CMS codificada em base 64 do arquivo definido no
+     *          atributo file_to_assign_.
+     */
     std::string assign() const;
 private:
-    std::string file_to_assign_;
-    std::weak_ptr<X509> certificate_;
-    std::weak_ptr<EVP_PKEY> private_key_;
+    std::string file_to_assign_; ///< @brief Path completo para o arquivo a ser assinado.
+    std::weak_ptr<X509> certificate_; ///< @brief Certificado X509.
+    std::weak_ptr<EVP_PKEY> private_key_; ///< @brief Chave privada.
 
+    /*
+     * @brief Método privado para assinar o arquivo definido pelo atributo file_to_assign_
+     *          gerando a assinatura no buffer recebido como parâmetro. O buffer pode
+     *          vir de um arquivo em disco ou da memória sendo codificado em base 64
+     *          ou não.
+     *
+     * @param[in] buffer Buffer onde será gerada a assinatura CMS.
+     */
     void assign(BIO* buffer) const;
 };
 
