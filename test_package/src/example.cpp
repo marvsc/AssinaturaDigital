@@ -1,8 +1,16 @@
-#include <unistd.h>
-
-#include <string>
+/*
+ * @file example.cpp
+ * @brief Arquivo de exemplo de implementação
+ * @author Marcus Chaves
+ * @date 2026-01-27
+ */
 #include "CMSSigner.h"
 #include "PKCS12Parser.h"
+
+#include "Data/POCO/PKCS12POCO.h"
+
+#include <string>
+#include <unistd.h>
 
 int main(const int argc, char *const argv[]) {
     int opt;
@@ -10,6 +18,8 @@ int main(const int argc, char *const argv[]) {
     std::string password("");
     std::string signature_file("");
     std::string file("");
+
+    // Parse de opções passadas por parâmetro
     while ((opt = getopt(argc, argv, "f:p:o:x:")) != -1) {
         switch (opt) {
         case 'x':
@@ -54,9 +64,13 @@ int main(const int argc, char *const argv[]) {
         return EXIT_FAILURE;
     }
     try {
+        // Instanciando o parser de PKCS 12 baseado em um arquivo PKCS 12 e uma senha
+        //  para acesso aos dados
         PKCS12Parser parser(pkcs12_file, password);
-        parser.parse();
-        CMSSigner signer(file, parser.get_certificate(), parser.get_private_key());
+        Data::POCO::PKCS12POCO pkcs12Poco = parser.parse();
+        CMSSigner signer(file, pkcs12Poco.certificate, pkcs12Poco.private_key);
+
+        // Gerando arquivo de assinatura
         signer.assign(signature_file);
     } catch (std::exception& e) {
         std::printf("Erro de execução: %s\n", e.what());

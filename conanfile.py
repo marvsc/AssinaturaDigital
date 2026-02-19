@@ -1,5 +1,7 @@
 from conan import ConanFile
 from conan.tools.cmake import CMakeToolchain, CMake, cmake_layout, CMakeDeps
+from conan.tools.files import copy
+import os
 
 
 class assinaturadigitalRecipe(ConanFile):
@@ -48,6 +50,7 @@ class assinaturadigitalRecipe(ConanFile):
         cmake.build()
 
     def package(self):
+        #copy(self, "*.h", dst=os.path.join(self.package_folder, "include"), src=os.path.join(self.source_folder, "include"), keep_path=True)
         cmake = CMake(self)
         cmake.install()
 
