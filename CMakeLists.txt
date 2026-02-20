@@ -12,6 +12,5 @@ set(AT_PUBLIC_HEADERS
 set_target_properties(assinaturadigital PROPERTIES PUBLIC_HEADER "${AT_PUBLIC_HEADERS}")
 install(TARGETS assinaturadigital)
 
-target_include_directories(assinaturadigital PUBLIC include/Data/POCO)
 set_target_properties(assinaturadigital PROPERTIES PUBLIC_HEADER "include/Data/POCO/PKCS12POCO.h")
-install(TARGETS assinaturadigital)
+install(TARGETS assinaturadigital PUBLIC_HEADER DESTINATION "include/Data/POCO")
