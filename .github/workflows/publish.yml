@@ -1,0 +1,26 @@
+name: Conan Publish
+on:
+   push:
+      tags:
+         - 'v*'
+
+jobs:
+   build-and-publish:
+      runs-on: ubuntu-latest
+      steps:
+         - uses: actions/checkout@v4
+
+         - name: Install and Setup Conan
+           uses: conan-io/setup-conan@v1
+           with:
+              version: 2.0.17
+
+         - name: Configure Remote
+           run: |
+              conan remote add github-packages https://maven.pkg.github.com{{ github.repository_owner }}/conan
+              conan remote login github-packages ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
+        
+         - name: Create and Upload Package
+           run: |
+              conan create . --version ${{ github.ref_name }} --user marvsc --channel stable
+              conan upload "*" --all -r github-packages

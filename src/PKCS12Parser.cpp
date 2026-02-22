@@ -14,7 +14,8 @@
 
 Data::POCO::PKCS12POCO PKCS12Parser::parse() const {
     // Abre o arquivo e define o deleter (fclose)
-    std::unique_ptr<std::FILE, decltype(&std::fclose)> file(std::fopen(pkcs12_file_path_.c_str(), "rb"), std::fclose);
+    // XXX: Não pode ser feito com decltype para não gerar o warning referente ao atributo de checagem nonnull
+    std::unique_ptr<std::FILE, int(*)(std::FILE*)> file(std::fopen(pkcs12_file_path_.c_str(), "rb"), std::fclose);
     if (file.get() == NULL) {
         throw std::runtime_error(
                 std::string("Erro abrindo arquivo ").append(

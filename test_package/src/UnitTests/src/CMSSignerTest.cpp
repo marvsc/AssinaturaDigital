@@ -2,6 +2,7 @@
 #include "../include/CMSSignerTest.h"
 
 #include "CMSSigner.h"
+#include "OpenSSLUtils.h"
 
 #include "../include/AssinaturaDigitalMacros.h"
 #include "Data/POCO/PKCS12POCO.h"
@@ -13,7 +14,8 @@ CPPUNIT_TEST_SUITE_REGISTRATION(CMSSignerTest);
 
 void CMSSignerTest::setUp() {
     // Instancia o parser PKCS 12
-    PKCS12Parser parser(PKCS12_FILE_PATH, PKCS12_PASSWORD);
+    PKCS12Parser parser(PKCS12_FILE_PATH, OpenSSLUtils::decrypt_aes_256_cbc(std::getenv(PKCS12_ENVVAR_PASSWORD),
+            AES_KEY, reinterpret_cast<const unsigned char*>(AES_INITIALIZATION_VECTOR)));
     pkcs12_poco_ = std::make_unique<Data::POCO::PKCS12POCO>(parser.parse());
 }
 
