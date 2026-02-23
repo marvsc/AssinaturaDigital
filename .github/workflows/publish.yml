@@ -2,7 +2,7 @@ name: Conan Publish
 on:
    push:
       tags:
-         - 'v*'
+         - 'v[0-9]+.[0-9]+.[0-9]+'
 
 jobs:
    build-and-publish:
@@ -13,14 +13,40 @@ jobs:
          - name: Install and Setup Conan
            uses: conan-io/setup-conan@v1
            with:
-              version: 2.0.17
+              version: 2.25.2
 
-         - name: Configure Remote
+         - name: Prepare environment
            run: |
-              conan remote add github-packages https://ghcr.io/${{ github.repository_owner }}
-              conan remote login github-packages ${{ github.actor }} -p ${{ secrets.CONAN_PAT }}
-        
-         - name: Create and Upload Package
+              mkdir build
+
+         - name: Configure
            run: |
-              conan create . --version ${{ github.ref_name }} --user marvsc --channel stable
-              conan upload "*" --all -r github-packages
+              conan install .
+              cmake -DCMAKE_TOOLCHAIN_FILE=build/Release/generators/conan_toolchain.cmake -S . -B build
+
+         - name: Compile
+           run: |
+              make -C build/
+
+         - name: Create Release
+           id: create_release
+           uses: actions/create-release@v1
+           env:
+             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+           with:
+             tag_name: ${{ github.ref }}
+             release_name: Release ${{ github.ref }}
+             body: |
+               Release ${{ github.ref }}
+             draft: false
+             prerelease: false
+
+         - name: Upload Release Asset
+           uses: actions/upload-release-asset@v1
+           env:
+             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+           with:
+             upload_url: ${{ steps.create_release.outputs.upload_url }}
+             asset_path: ./build/libassinaturadigital.a
+             asset_name: libassinaturadigital.a
+             asset_content_type: application/x-archive
