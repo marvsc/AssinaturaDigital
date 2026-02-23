@@ -6,7 +6,6 @@ import os
 
 class assinaturadigitalRecipe(ConanFile):
     name = "assinaturadigital"
-    version = "0.1"
     package_type = "library"
 
     # Optional metadata

@@ -17,8 +17,8 @@ jobs:
 
          - name: Configure Remote
            run: |
-              conan remote add github-packages https://maven.pkg.github.com{{ github.repository_owner }}/conan
-              conan remote login github-packages ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
+              conan remote add github-packages https://ghcr.io/${{ github.repository_owner }}
+              conan remote login github-packages ${{ github.actor }} -p ${{ secrets.CONAN_ṔAT }}
         
          - name: Create and Upload Package
            run: |
