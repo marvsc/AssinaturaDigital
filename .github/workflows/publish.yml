@@ -28,6 +28,16 @@ jobs:
            run: |
               make -C build/
 
+         - name: Prepare package
+           run: |
+              mkdir -p build/package/lib
+              cp build/libassinaturadigital.a build/package/lib/
+              cp -r include/ build/package/
+
+         - name: Generate tarball
+           run: |
+              tar -czvf build/libassinaturadigital-${{ github.ref }}.tgz -C build/package/ include/ lib/
+
          - name: Create Release
            id: create_release
            uses: actions/create-release@v1
@@ -47,6 +57,6 @@ jobs:
              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
            with:
              upload_url: ${{ steps.create_release.outputs.upload_url }}
-             asset_path: ./build/libassinaturadigital.a
-             asset_name: libassinaturadigital.a
+             asset_path: ./build/libassinaturadigital-${{ github.ref }}.tgz
+             asset_name: libassinaturadigital-${{ github.ref }}.tgz
              asset_content_type: application/x-archive
