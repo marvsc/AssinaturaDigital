@@ -5,12 +5,12 @@
 ## 📋 Tabela de Conteúdos
 - [Sobre](#-sobre)
 - [Funcionalidades](#-funcionalidades)
-- [Pré-requisitos gerais](#-pré-requisitos-gerais)
+- [Pré-requisitos gerais](#%EF%B8%8F-pr%C3%A9-requisitos-gerais)
 - [Instalação](#-instalação)
     - [Pacote](#-Pacote)
     - [CMake](#-cmake)
     - [Conan](#-conan)
-        - [Pré-requisitos](#-pré-requisitos)
+        - [Pré-requisitos](#%EF%B8%8F-pr%C3%A9-requisitos)
         - [Passos para a compilação](#-passos-para-a-compilação)
 - [Como Usar](#-como-usar)
 
@@ -35,7 +35,7 @@ Faz o parse de arquivos PKCS 12 armazenando chave privada e certificado em memó
 ### 📦 Pacote
 --- CONSTRUÇÃO
 
-### CMake
+### 🛆 CMake
 
 1. Clonar o projeto:
 
