@@ -39,7 +39,7 @@ Faz o parse de arquivos PKCS 12 armazenando chave privada e certificado em memó
 
 1. Clonar o projeto:
 
-    ```console
+    ```bash
     git clone git@github.com:marvsc/AssinaturaDigital.git
     ```
 
@@ -67,8 +67,8 @@ Faz o parse de arquivos PKCS 12 armazenando chave privada e certificado em memó
     make -C build/
     ```
 
-    > [!NOTE]
-    > O comando acima irá compilar o projeto e gerar o artefato build/libassinaturadigital.a
+> [!NOTE]
+> O comando acima irá compilar o projeto e gerar o artefato build/libassinaturadigital.a
 
 ### 💪🏻 Conan
 
@@ -88,25 +88,25 @@ Faz o parse de arquivos PKCS 12 armazenando chave privada e certificado em memó
 
     2.1. Converter a chave e o vetor de inicialização em formato hexadecimal
 
-        ```bash
-        echo -n "<chave>" | xxd -p -c 256
-        echo -n "<iv> | xxd -p -c 256
-        ```
+    ```bash
+    echo -n "<chave>" | xxd -p -c 256
+    echo -n "<iv> | xxd -p -c 256
+    ```
 
     2.2. Encriptar a senha passando a chave e o vetor de inicialização em hexadecimal
 
-        ```bash
-        echo -n "<senha>" | openssl enc -aes-256-cbc -e -base64 -K <chave_hex> -iv <iv_hex>
-        ```
+    ```bash
+    echo -n "<senha>" | openssl enc -aes-256-cbc -e -base64 -K <chave_hex> -iv <iv_hex>
+    ```
 
     2.3. Definir a variável de ambiente PKCS12_ENVVAR_PASSWORD com a senha encriptada:
 
-        ```bash
-        export PKCS12_ENVVAR_PASSWORD=<senha_enc>
-        ```
+    ```bash
+    export PKCS12_ENVVAR_PASSWORD=<senha_enc>
+    ```
 
-    > [!NOTE]
-    > A chave e o vetor de inicialização podem ser obtidos no arquivo test_package/src/UnitTests/include/AssinaturaDigitalMacros.h
+> [!NOTE]
+> A chave e o vetor de inicialização podem ser obtidos no arquivo test_package/src/UnitTests/include/AssinaturaDigitalMacros.h
 
 3. Criar o projeto utilizando conan:
 
@@ -114,12 +114,12 @@ Faz o parse de arquivos PKCS 12 armazenando chave privada e certificado em memó
     conan create . --build=missing
     ```
 
-    > [!NOTE]
-    > O comando acima vai baixar e compilar todas as dependencias, compilar o projeto e executar os testes
-    > que são compostos de 2 executáveis. Um faz os testes unitários e o outro realiza a assinatura digital
-    > do arquivo test_package/resources/arquivos/doc.txt gerando a assinatura no arquivo
-    > test_package/resources/arquivos/sinature.p7s. A assinatura é feita utilizando a chave privada e o
-    > certificado contidos no arquivo PKCS 12 test_package/resources/pkcs12/certificado_teste_hub.pfx.
+> [!NOTE]
+> O comando acima vai baixar e compilar todas as dependencias, compilar o projeto e executar os testes
+> que são compostos de 2 executáveis. Um faz os testes unitários e o outro realiza a assinatura digital
+> do arquivo test_package/resources/arquivos/doc.txt gerando a assinatura no arquivo
+> test_package/resources/arquivos/sinature.p7s. A assinatura é feita utilizando a chave privada e o
+> certificado contidos no arquivo PKCS 12 test_package/resources/pkcs12/certificado_teste_hub.pfx.
 
 ## ✅ Como usar
 
