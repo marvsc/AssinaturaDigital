@@ -39,7 +39,7 @@ Faz o parse de arquivos PKCS 12 armazenando chave privada e certificado em memó
 
 1. Clonar o projeto:
 
-    ```bash
+    ```console
     git clone git@github.com:marvsc/AssinaturaDigital.git
     ```
 
