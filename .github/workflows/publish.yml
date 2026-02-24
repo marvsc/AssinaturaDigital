@@ -22,7 +22,7 @@ jobs:
          - name: Configure
            run: |
               conan install . --build=missing
-              cmake -DCMAKE_BUILD_TYPE=Release -S . -B build
+              cmake -DCMAKE_TOOLCHAIN_FILE=build/Release/generators/conan_toolchain.cmake -DCMAKE_BUILD_TYPE=Release -S . -B build
 
          - name: Compile
            run: |
