@@ -21,7 +21,7 @@ jobs:
 
          - name: Configure
            run: |
-              conan install .
+              conan install . --build=missing
               cmake -DCMAKE_TOOLCHAIN_FILE=build/Release/generators/conan_toolchain.cmake -S . -B build
 
          - name: Compile
