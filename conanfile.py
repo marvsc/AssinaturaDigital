@@ -25,6 +25,7 @@ class assinaturadigitalRecipe(ConanFile):
 
     def requirements(self):
         self.requires("openssl/3.6.1")
+        self.requires("poco/1.13.3")
 
     def config_options(self):
         if self.settings.os == "Windows":
