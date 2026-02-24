@@ -8,7 +8,7 @@ permissions:
    contents: write
 
 jobs:
-   build-and-publish:
+   build-local-and-publish:
       runs-on: ubuntu-latest
       steps:
          - uses: actions/checkout@v4
@@ -37,9 +37,13 @@ jobs:
               cp build/libassinaturadigital.a build/package/lib/
               cp -r include/ build/package/
 
+         - name: Get tag name from GITHUB_REF
+           id: get_tag_name
+           run: echo "tag_name=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
+
          - name: Generate tarball
            run: |
-              tar -czvf build/libassinaturadigital-${{ github.ref_name }}.tgz -C build/package/ include/ lib/
+              tar -czvf build/libassinaturadigital-${{ env.tag_name }}.tgz -C build/package/ include/ lib/
 
          - name: Create Release
            id: create_release
@@ -47,10 +51,10 @@ jobs:
            env:
              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
            with:
-             tag_name: ${{ github.ref }}
-             release_name: Release ${{ github.ref }}
+             tag_name: ${{ env.tag_name }}
+             release_name: Release ${{ env.tag_name }}
              body: |
-               Release ${{ github.ref }}
+               Release ${{ env.tag_name }}
              draft: false
              prerelease: false
 
@@ -60,6 +64,31 @@ jobs:
              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
            with:
              upload_url: ${{ steps.create_release.outputs.upload_url }}
-             asset_path: ./build/libassinaturadigital-${{ github.ref_name }}.tgz
-             asset_name: libassinaturadigital-${{ github.ref }}.tgz
+             asset_path: ./build/libassinaturadigital-${{ env.tag_name }}.tgz
+             asset_name: libassinaturadigital-${{ env.tag_name }}.tgz
              asset_content_type: application/x-archive
+
+   build-cache-and-upload:
+      runs-on: ubuntu-latest
+      steps:
+         - uses: actions/checkout@v4
+
+         - name: Install and Setup Conan
+           uses: conan-io/setup-conan@v1
+           with:
+              version: 2.25.2
+
+         - name: Configure Remote
+           run: |
+              conan remote add cloudsmith https://conan.cloudsmith.io/${{ github.actor }}/${{ secrets.CLOUDSMITH_WORKSPACE }}/
+              conan remote login cloudsmith ${{ secrets.CLOUDSMITH_USER }} -p ${{ secrets.CLOUDSMITH_TOKEN }}
+
+         - name: Get tag name from GITHUB_REF
+           id: get_tag_name
+           run: echo "tag_name=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
+
+         - name: Create and Upload Package
+           run: |
+              export PKCS12_ENVVAR_PASSWORD=secrets.ENCRYPTED_PASSWORD
+              conan create . --version ${{ env.tag_name }} --build=missing
+              conan upload assinaturadigital/${{ env.tag_name }} -r cloudsmith

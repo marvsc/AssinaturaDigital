@@ -12,6 +12,7 @@
     - [Conan](#-conan)
         - [Pré-requisitos](#%EF%B8%8F-pr%C3%A9-requisitos)
         - [Passos para a compilação](#-passos-para-a-compilação)
+- [Pipeline](#-pipeline)
 - [Como Usar](#-como-usar)
 
 ## 📖 Sobre
@@ -33,7 +34,17 @@ Faz o parse de arquivos PKCS 12 armazenando chave privada e certificado em memó
 ## 🚀 Instalação
 
 ### 📦 Pacote
---- CONSTRUÇÃO
+1. Baixar o pacote:
+
+    ```bash
+    wget https://github.com/marvsc/AssinaturaDigital/releases/download/v<versão>/libassinaturadigital-v<versão>.tgz
+    ```
+
+2. Descompactar:
+
+    ```bash
+    tar zxvf libassinaturadigital-v<versão>.tgz -C <diretório a descompactar>
+    ```
 
 ### 🛆 CMake
 
@@ -120,6 +131,9 @@ Faz o parse de arquivos PKCS 12 armazenando chave privada e certificado em memó
 > do arquivo test_package/resources/arquivos/doc.txt gerando a assinatura no arquivo
 > test_package/resources/arquivos/sinature.p7s. A assinatura é feita utilizando a chave privada e o
 > certificado contidos no arquivo PKCS 12 test_package/resources/pkcs12/certificado_teste_hub.pfx.
+
+## Pipeline
+Ao criar uma tag, duas pipelines são disparadas via github para gerar a release automaticamente e para publicar o pacote no repositório do conan (cloudsmith).
 
 ## ✅ Como usar
 
