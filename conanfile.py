@@ -45,6 +45,7 @@ class assinaturadigitalRecipe(ConanFile):
         self.options["poco"].enable_data_sqlite = False
         self.options["poco"].enable_encodings = False
         self.options["poco"].enable_fork = False
+        self.options["poco"].enable_json = False
         self.options["poco"].enable_jwt = False
         self.options["poco"].enable_mongodb = False
         self.options["poco"].enable_pagecompiler = False
