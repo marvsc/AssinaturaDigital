@@ -15,6 +15,5 @@
 #define FILE_TO_ASSIGN_PATH "doc.txt"
 #define SIGNATURE_FILE_PATH "../../resources/arquivos/signature.p7s"
 
-// dKSJy+f3FMjtyG1ynWG2fg==
 
 #endif /* TEST_PACKAGE_SRC_UNITTESTS_INCLUDE_ASSINATURADIGITALMACROS_H_ */

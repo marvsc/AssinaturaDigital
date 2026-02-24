@@ -89,6 +89,7 @@ jobs:
 
          - name: Create and Upload Package
            run: |
-              export PKCS12_ENVVAR_PASSWORD=secrets.ENCRYPTED_PASSWORD
               conan create . --version ${{ env.tag_name }} --build=missing
               conan upload assinaturadigital/${{ env.tag_name }} -r cloudsmith
+           env:
+              PKCS12_ENVVAR_PASSWORD: ${{ secrets.ENCRYPTED_PASSWORD }}
