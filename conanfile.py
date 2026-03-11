@@ -24,8 +24,8 @@ class assinaturadigitalRecipe(ConanFile):
     exports_sources = "CMakeLists.txt", "src/*", "include/*"
 
     def requirements(self):
-        self.requires("openssl/3.6.1")
-        self.requires("poco/1.13.3")
+        self.requires("openssl/[>3.5.0]")
+        self.requires("poco/[>1.11.0]")
 
     def config_options(self):
         if self.settings.os == "Windows":
