@@ -67,8 +67,8 @@ int main(const int argc, char *const argv[]) {
         // Instanciando o parser de PKCS 12 baseado em um arquivo PKCS 12 e uma senha
         //  para acesso aos dados
         PKCS12Parser parser(pkcs12_file, password);
-        std::shared_ptr<Data::POCO::PKCS12POCO> pkcs12Poco = parser.parse();
-        CMSSigner signer(file, pkcs12Poco->certificate, pkcs12Poco->private_key);
+        std::unique_ptr<Data::POCO::PKCS12POCO> pkcs12Poco = parser.parse();
+        CMSSigner signer(file, pkcs12Poco->certificate.release(), pkcs12Poco->private_key.release());
 
         // Gerando arquivo de assinatura
         signer.assign(signature_file);

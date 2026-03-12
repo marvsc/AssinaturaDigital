@@ -33,8 +33,8 @@ public:
      * @param[in] certificate Certificado X509.
      * @param[in] private_key Chave privada.
      */
-    CMSSigner(const std::string &file_to_assign, std::shared_ptr<X509> certificate,
-            std::shared_ptr<EVP_PKEY> private_key);
+    CMSSigner(const std::string &file_to_assign, X509* certificate,
+            EVP_PKEY* private_key);
 
     /*
      * @brief Destrói a classe.
@@ -55,8 +55,8 @@ public:
      *
      * @param[in] certificate Certificado X509.
      */
-    void set_certificate(std::shared_ptr<X509> certificate) {
-        certificate_ = certificate;
+    void set_certificate(X509* certificate) {
+        certificate_.reset(certificate, X509_free);
     }
 
     /*
@@ -64,8 +64,8 @@ public:
      *
      * @param[in] private_key Chave privada.
      */
-    void set_private_key(std::shared_ptr<EVP_PKEY> private_key) {
-        private_key_ = private_key;
+    void set_private_key(EVP_PKEY* private_key) {
+        private_key_.reset(private_key, EVP_PKEY_free);
     }
 
     /*
@@ -87,8 +87,8 @@ public:
     std::string assign() const;
 private:
     std::string file_to_assign_; ///< @brief Path completo para o arquivo a ser assinado.
-    std::weak_ptr<X509> certificate_; ///< @brief Certificado X509.
-    std::weak_ptr<EVP_PKEY> private_key_; ///< @brief Chave privada.
+    std::shared_ptr<X509> certificate_; ///< @brief Certificado X509.
+    std::shared_ptr<EVP_PKEY> private_key_; ///< @brief Chave privada.
 
     /*
      * @brief Método privado para assinar o arquivo definido pelo atributo file_to_assign_

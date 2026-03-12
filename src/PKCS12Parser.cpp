@@ -12,7 +12,7 @@
 #include <openssl/pkcs12.h>
 #include <Poco/Logger.h>
 
-std::shared_ptr<Data::POCO::PKCS12POCO> PKCS12Parser::parse() const {
+std::unique_ptr<Data::POCO::PKCS12POCO> PKCS12Parser::parse() const {
     // Abre o arquivo e define o deleter (fclose)
     // XXX: Não pode ser feito com decltype para não gerar o warning referente ao atributo de checagem nonnull
     std::unique_ptr<std::FILE, int(*)(std::FILE*)> file(std::fopen(pkcs12_file_path_.c_str(), "rb"), std::fclose);
@@ -38,6 +38,6 @@ std::shared_ptr<Data::POCO::PKCS12POCO> PKCS12Parser::parse() const {
     }
 
     // Instancia o poco com o certificado e com a chave primária
-    return std::shared_ptr<Data::POCO::PKCS12POCO>(new Data::POCO::PKCS12POCO(std::shared_ptr<X509>(certificate, X509_free), std::shared_ptr<EVP_PKEY>(private_key, EVP_PKEY_free)));
+    return std::make_unique<Data::POCO::PKCS12POCO>(certificate, private_key);
 }
 

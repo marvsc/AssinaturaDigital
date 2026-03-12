@@ -73,7 +73,7 @@ public:
      */
     void teste_construtor_completo_base64();
 private:
-    std::shared_ptr<Data::POCO::PKCS12POCO> pkcs12_poco_; ///< @brief Poco contendo certificado e chave priváda
+    std::unique_ptr<Data::POCO::PKCS12POCO> pkcs12_poco_; ///< @brief Poco contendo certificado e chave priváda
 };
 
 #endif /* TEST_PACKAGE_SRC_UNITTESTS_INCLUDE_CMSSIGNERTEST_H_ */

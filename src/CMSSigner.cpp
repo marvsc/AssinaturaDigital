@@ -13,10 +13,10 @@ CMSSigner::CMSSigner() :
 }
 
 CMSSigner::CMSSigner(const std::string &file_to_assign,
-        std::shared_ptr<X509> certificate,
-        std::shared_ptr<EVP_PKEY> private_key) :
-        file_to_assign_(file_to_assign), certificate_(certificate), private_key_(
-                private_key) {
+        X509* certificate,
+        EVP_PKEY* private_key) :
+        file_to_assign_(file_to_assign), certificate_(certificate, X509_free), private_key_(
+                private_key, EVP_PKEY_free) {
 }
 
 void CMSSigner::assign(BIO* buffer) const {
@@ -26,7 +26,7 @@ void CMSSigner::assign(BIO* buffer) const {
 
     // Gera a assinatura para o arquivo já definindo o deleter para a assinatura
     std::unique_ptr<CMS_ContentInfo, decltype(&CMS_ContentInfo_free)> content_info(
-            CMS_sign(certificate_.lock().get(), private_key_.lock().get(), NULL,
+            CMS_sign(certificate_.get(), private_key_.get(), NULL,
                     file_buffer.get(), CMS_BINARY), CMS_ContentInfo_free);
 
     // Despeja o conteúda da assinatura no buffer recebido por parâmetro

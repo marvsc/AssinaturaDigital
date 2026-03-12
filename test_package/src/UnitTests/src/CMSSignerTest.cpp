@@ -26,8 +26,8 @@ void CMSSignerTest::tearDown() {
 
 void CMSSignerTest::teste_construtor_basico_arquivo_assinatura() {
     CMSSigner signer;
-    signer.set_certificate(pkcs12_poco_->certificate);
-    signer.set_private_key(pkcs12_poco_->private_key);
+    signer.set_certificate(pkcs12_poco_->certificate.release());
+    signer.set_private_key(pkcs12_poco_->private_key.release());
     signer.set_file_to_assign(FILE_TO_ASSIGN_PATH);
 
     // Assina o arquivo
@@ -41,8 +41,8 @@ void CMSSignerTest::teste_construtor_basico_arquivo_assinatura() {
 
 void CMSSignerTest::teste_construtor_basico_base64() {
     CMSSigner signer;
-    signer.set_certificate(pkcs12_poco_->certificate);
-    signer.set_private_key(pkcs12_poco_->private_key);
+    signer.set_certificate(pkcs12_poco_->certificate.release());
+    signer.set_private_key(pkcs12_poco_->private_key.release());
     signer.set_file_to_assign(FILE_TO_ASSIGN_PATH);
 
     // Assina o arquivo
@@ -53,7 +53,7 @@ void CMSSignerTest::teste_construtor_basico_base64() {
 }
 
 void CMSSignerTest::teste_construtor_completo_arquivo_assinatura() {
-    CMSSigner signer(FILE_TO_ASSIGN_PATH, pkcs12_poco_->certificate, pkcs12_poco_->private_key);
+    CMSSigner signer(FILE_TO_ASSIGN_PATH, pkcs12_poco_->certificate.release(), pkcs12_poco_->private_key.release());
 
     // Assina o arquivo
     signer.assign(SIGNATURE_FILE_PATH);
@@ -65,7 +65,7 @@ void CMSSignerTest::teste_construtor_completo_arquivo_assinatura() {
 }
 
 void CMSSignerTest::teste_construtor_completo_base64() {
-    CMSSigner signer(FILE_TO_ASSIGN_PATH, pkcs12_poco_->certificate, pkcs12_poco_->private_key);
+    CMSSigner signer(FILE_TO_ASSIGN_PATH, pkcs12_poco_->certificate.release(), pkcs12_poco_->private_key.release());
 
     // Assina o arquivo
     std::string assinatura_base64(signer.assign());

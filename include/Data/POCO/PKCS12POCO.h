@@ -9,7 +9,6 @@
 #define INCLUDE_DATA_POCO_PKCS12POCO_H_
 
 #include <memory>
-#include <cstdio>
 
 #include <openssl/ssl.h>
 
@@ -22,8 +21,8 @@ namespace POCO {
  */
 class PKCS12POCO {
 public:
-    std::shared_ptr<X509> certificate; ///< @brief Certificado X509
-    std::shared_ptr<EVP_PKEY> private_key; ///< @brief Chave primária
+    std::unique_ptr<X509, decltype(&X509_free)> certificate; ///< @brief Certificado X509
+    std::unique_ptr<EVP_PKEY, decltype(&EVP_PKEY_free)> private_key; ///< @brief Chave primária
 
     /*
      * @brief Constrói o POCO com base em um certificado e uma chave primária
@@ -31,16 +30,12 @@ public:
      * @param[in] certificate Certificado X509.
      * @param[in] private_key Chave primária.
      */
-    PKCS12POCO(std::shared_ptr<X509> certificate, std::shared_ptr<EVP_PKEY> private_key) : certificate(certificate), private_key(private_key) {}
+    PKCS12POCO(X509* certificate, EVP_PKEY* private_key) : certificate(certificate, X509_free), private_key(private_key, EVP_PKEY_free) {}
 
     /*
      * @brief Destrói o POCO.
      */
-    virtual ~PKCS12POCO() {
-        std::printf("POCO DESTRUIDO\n");
-        certificate.reset();
-        private_key.reset();
-    }
+    virtual ~PKCS12POCO() {}
 };
 
 } /* namespace POCO */

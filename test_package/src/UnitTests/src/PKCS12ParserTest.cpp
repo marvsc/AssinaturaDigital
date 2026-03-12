@@ -23,7 +23,7 @@ void PKCS12ParserTest::teste_construtor_basico() {
             AES_KEY, reinterpret_cast<const unsigned char*>(AES_INITIALIZATION_VECTOR)));
 
     // Faz o parse do PKCS12
-    std::shared_ptr<Data::POCO::PKCS12POCO> pkcs12_poco = parser.parse();
+    std::unique_ptr<Data::POCO::PKCS12POCO> pkcs12_poco = parser.parse();
     CPPUNIT_ASSERT_MESSAGE("Erro de parse causou certificado nulo", pkcs12_poco->certificate.get() != nullptr);
     CPPUNIT_ASSERT_MESSAGE("Erro de parse causou chave privada nula", pkcs12_poco->private_key.get() != nullptr);
 }
@@ -37,7 +37,7 @@ void PKCS12ParserTest::teste_construtor_sem_senha() {
             AES_KEY, reinterpret_cast<const unsigned char*>(AES_INITIALIZATION_VECTOR)));
 
     // Faz o parse do PKCS12
-    std::shared_ptr<Data::POCO::PKCS12POCO> pkcs12_poco = parser.parse();
+    std::unique_ptr<Data::POCO::PKCS12POCO> pkcs12_poco = parser.parse();
     CPPUNIT_ASSERT_MESSAGE("Erro de parse causou certificado nulo", pkcs12_poco->certificate.get() != nullptr);
     CPPUNIT_ASSERT_MESSAGE("Erro de parse causou chave privada nula", pkcs12_poco->private_key.get() != nullptr);
 }
@@ -49,7 +49,7 @@ void PKCS12ParserTest::teste_construtor_com_senha() {
             AES_KEY, reinterpret_cast<const unsigned char*>(AES_INITIALIZATION_VECTOR)));
 
     // Faz o parse do PKCS12
-    std::shared_ptr<Data::POCO::PKCS12POCO> pkcs12_poco = parser.parse();
+    std::unique_ptr<Data::POCO::PKCS12POCO> pkcs12_poco = parser.parse();
     CPPUNIT_ASSERT_MESSAGE("Erro de parse causou certificado nulo", pkcs12_poco->certificate.get() != nullptr);
     CPPUNIT_ASSERT_MESSAGE("Erro de parse causou chave privada nula", pkcs12_poco->private_key.get() != nullptr);
 }
