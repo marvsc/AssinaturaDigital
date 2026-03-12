@@ -35,10 +35,7 @@ public:
     /*
      * @brief Destrói o POCO.
      */
-    virtual ~PKCS12POCO() {
-        certificate.reset();
-        private_key.reset();
-    }
+    virtual ~PKCS12POCO() {}
 };
 
 } /* namespace POCO */
