@@ -74,7 +74,7 @@ public:
      *
      * @return Objeto poco com a chave primária e o certificado.
      */
-    Data::POCO::PKCS12POCO parse() const;
+    std::shared_ptr<Data::POCO::PKCS12POCO> parse() const;
 private:
     std::string pkcs12_file_path_; ///< @brief Path completo para o arquivo PKCS 12.
     std::string password_; ///< @brief Senha para acesso ao conteúdo do arquivo PKCS 12.

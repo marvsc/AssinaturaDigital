@@ -9,6 +9,7 @@
 #define INCLUDE_DATA_POCO_PKCS12POCO_H_
 
 #include <memory>
+#include <cstdio>
 
 #include <openssl/ssl.h>
 
@@ -35,7 +36,11 @@ public:
     /*
      * @brief Destrói o POCO.
      */
-    virtual ~PKCS12POCO() {}
+    virtual ~PKCS12POCO() {
+        std::printf("POCO DESTRUIDO\n");
+        certificate.reset();
+        private_key.reset();
+    }
 };
 
 } /* namespace POCO */

@@ -16,7 +16,7 @@ void CMSSignerTest::setUp() {
     // Instancia o parser PKCS 12
     PKCS12Parser parser(PKCS12_FILE_PATH, OpenSSLUtils::decrypt_aes_256_cbc(std::getenv(PKCS12_ENVVAR_PASSWORD),
             AES_KEY, reinterpret_cast<const unsigned char*>(AES_INITIALIZATION_VECTOR)));
-    pkcs12_poco_ = std::make_unique<Data::POCO::PKCS12POCO>(parser.parse());
+    pkcs12_poco_ = parser.parse();
 }
 
 void CMSSignerTest::tearDown() {
