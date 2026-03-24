@@ -2,6 +2,7 @@
  * @file PKCS12ParserTest.h
  * @brief Declaração da classe PKCS12ParserTest
  * @author Marcus Chaves
+ * @date 2026-01-27
  */
 
 #ifndef TEST_PACKAGE_SRC_UNITTESTS_INCLUDE_PKCS12PARSERTEST_H_

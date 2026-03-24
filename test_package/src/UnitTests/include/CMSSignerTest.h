@@ -2,6 +2,7 @@
  * @file CMSSignerTest.h
  * @brief Declaração da classe CMSSignerTest
  * @author Marcus Chaves
+ * @date 2026-01-27
  */
 
 #ifndef TEST_PACKAGE_SRC_UNITTESTS_INCLUDE_CMSSIGNERTEST_H_
