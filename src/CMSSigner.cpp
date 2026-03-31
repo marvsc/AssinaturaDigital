@@ -8,15 +8,12 @@
 #include <openssl/cms.h>
 #include <openssl/err.h>
 
-CMSSigner::CMSSigner() :
-        file_to_assign_("") {
+CMSSigner::CMSSigner(const std::string &file_to_assign, const std::string& pkcs12_path) :
+        file_to_assign_(file_to_assign), container_(pkcs12_path) {
 }
 
-CMSSigner::CMSSigner(const std::string &file_to_assign,
-        X509* certificate,
-        EVP_PKEY* private_key) :
-        file_to_assign_(file_to_assign), certificate_(certificate, X509_free), private_key_(
-                private_key, EVP_PKEY_free) {
+CMSSigner::CMSSigner(const std::string& file_to_assign, const std::string& pkcs12_path, const std::string& password) :
+        file_to_assign_(file_to_assign), container_(pkcs12_path, password) {
 }
 
 void CMSSigner::assign(BIO* buffer) const {
@@ -26,8 +23,8 @@ void CMSSigner::assign(BIO* buffer) const {
 
     // Gera a assinatura para o arquivo já definindo o deleter para a assinatura
     std::unique_ptr<CMS_ContentInfo, decltype(&CMS_ContentInfo_free)> content_info(
-            CMS_sign(certificate_.get(), private_key_.get(), NULL,
-                    file_buffer.get(), CMS_BINARY), CMS_ContentInfo_free);
+            CMS_sign(const_cast<X509*>(container_.getX509Certificate().certificate()), container_.getKey(),
+                    nullptr, file_buffer.get(), CMS_BINARY), CMS_ContentInfo_free);
 
     // Despeja o conteúda da assinatura no buffer recebido por parâmetro
     if (!i2d_CMS_bio(buffer, content_info.get())) {

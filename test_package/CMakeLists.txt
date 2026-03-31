@@ -8,7 +8,6 @@ add_executable(example src/example.cpp)
 target_link_libraries(example assinaturadigital::assinaturadigital)
 
 add_executable(teste src/teste.cpp
-                    src/UnitTests/src/PKCS12ParserTest.cpp
                     src/UnitTests/src/CMSSignerTest.cpp)
 target_link_libraries(teste assinaturadigital::assinaturadigital cppunit::cppunit)
 

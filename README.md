@@ -17,11 +17,10 @@
 
 ## 📖 Sobre
 
-Faz o parse de arquivos PKCS 12 armazenando chave privada e certificado em memória, faz assinatura digital de arquivo utilizando algoritmo Cryptographic Message Syntax (CMS) incluindo o conteúdo da mensagem dentro da estrutura da assinatura (attached) e ainda expõe algumas utilidades para criptografia como por exemplo decodificação base 64 e decodificação de string em algoritmo AES com chave de 256 bits e modo Cipher Block Chaining (CBC).
+Faz assinatura digital de arquivo utilizando algoritmo Cryptographic Message Syntax (CMS) incluindo o conteúdo da mensagem dentro da estrutura da assinatura (attached) e ainda expõe algumas utilidades para criptografia como por exemplo decodificação base 64 e decodificação de string em algoritmo AES com chave de 256 bits e modo Cipher Block Chaining (CBC).
 
 ## ✨ Funcionalidades
 
-- [x] Decodificação de arquivo PKCS 12 em memória
 - [x] Assinatura digital de arquivo em algoritmo CMS attached em disco
 - [x] Assinatura digital de arquivo em algoritmo CMS attached em memória (base 64)
 - [x] Decodificação de string em base 64

@@ -5,9 +5,6 @@
  * @date 2026-01-27
  */
 #include "CMSSigner.h"
-#include "PKCS12Parser.h"
-
-#include "Data/POCO/PKCS12POCO.h"
 
 #include <string>
 #include <unistd.h>
@@ -64,11 +61,8 @@ int main(const int argc, char *const argv[]) {
         return EXIT_FAILURE;
     }
     try {
-        // Instanciando o parser de PKCS 12 baseado em um arquivo PKCS 12 e uma senha
-        //  para acesso aos dados
-        PKCS12Parser parser(pkcs12_file, password);
-        std::unique_ptr<Data::POCO::PKCS12POCO> pkcs12Poco = parser.parse();
-        CMSSigner signer(file, pkcs12Poco->certificate.release(), pkcs12Poco->private_key.release());
+        // Instanciando classe para assinar o arquivo
+        CMSSigner signer(file, pkcs12_file, password);
 
         // Gerando arquivo de assinatura
         signer.assign(signature_file);

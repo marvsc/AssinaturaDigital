@@ -11,7 +11,7 @@
 #include <memory>
 #include <string>
 
-#include <openssl/ssl.h>
+#include <Poco/Crypto/PKCS12Container.h>
 
 /*
  * @class CMSSigner
@@ -21,52 +21,29 @@ class CMSSigner {
 public:
 
     /*
-     * @brief Constrói a classe de forma básica
+     * @brief Constrói a classe a partir de um path para um arquivo a ser assinado e
+     *          o path para um arquivo PKCS 12.
+     *
+     * @param[in] file_to_assign Path completo para o arquivo a ser assinado.
+     * @param[in] pkcs12_path Path completo para o arquivo PKCS 12.
      */
-    CMSSigner();
+    CMSSigner(const std::string &file_to_assign, const std::string& pkcs12_path);
 
     /*
      * @brief Constrói a classe a partir de um path para um arquivo a ser assinado,
-     *          um certificado e uma chave privada.
+     *          o path para um arquivo PKCS 12 e uma senha.
      *
      * @param[in] file_to_assign Path completo para o arquivo a ser assinado.
-     * @param[in] certificate Certificado X509.
-     * @param[in] private_key Chave privada.
+     * @param[in] pkcs12_path Path completo para arquivo PKCS 12.
+     * @param[in] password Senha de acesso aos dados do arquivo PKCS 12.
      */
-    CMSSigner(const std::string &file_to_assign, X509* certificate,
-            EVP_PKEY* private_key);
+    CMSSigner(const std::string& file_to_assign, const std::string& pkcs12_path,
+            const std::string& password);
 
     /*
      * @brief Destrói a classe.
      */
     virtual ~CMSSigner() {}
-
-    /*
-     * @brief Define o path para o arquivo a ser assinado.
-     *
-     * @param[in] file_to_assign Path completo para o arquivo a ser assinado.
-     */
-    void set_file_to_assign(const std::string &file_to_assign) {
-        file_to_assign_ = file_to_assign;
-    }
-
-    /*
-     * @brief Define o certificado X509.
-     *
-     * @param[in] certificate Certificado X509.
-     */
-    void set_certificate(X509* certificate) {
-        certificate_.reset(certificate, X509_free);
-    }
-
-    /*
-     * @brief Define a chave privada.
-     *
-     * @param[in] private_key Chave privada.
-     */
-    void set_private_key(EVP_PKEY* private_key) {
-        private_key_.reset(private_key, EVP_PKEY_free);
-    }
 
     /*
      * @brief Assina o arquivo definido no atributo file_to_assign_ e gera um aquivo
@@ -87,8 +64,7 @@ public:
     std::string assign() const;
 private:
     std::string file_to_assign_; ///< @brief Path completo para o arquivo a ser assinado.
-    std::shared_ptr<X509> certificate_; ///< @brief Certificado X509.
-    std::shared_ptr<EVP_PKEY> private_key_; ///< @brief Chave privada.
+    Poco::Crypto::PKCS12Container container_; ///< @brief container com os certificados.
 
     /*
      * @brief Método privado para assinar o arquivo definido pelo atributo file_to_assign_

@@ -8,10 +8,6 @@
 #ifndef TEST_PACKAGE_SRC_UNITTESTS_INCLUDE_CMSSIGNERTEST_H_
 #define TEST_PACKAGE_SRC_UNITTESTS_INCLUDE_CMSSIGNERTEST_H_
 
-#include "PKCS12Parser.h"
-
-#include "Data/POCO/PKCS12POCO.h"
-
 #include <memory>
 
 #include <cppunit/TestFixture.h>
@@ -26,55 +22,17 @@ class CMSSignerTest : public CppUnit::TestFixture {
     // Declaração do suite de testes
     CPPUNIT_TEST_SUITE(CMSSignerTest);
     // Adicionando steps
-    CPPUNIT_TEST(teste_construtor_basico_arquivo_assinatura);
-    CPPUNIT_TEST(teste_construtor_completo_arquivo_assinatura);
-    CPPUNIT_TEST(teste_construtor_basico_base64);
-    CPPUNIT_TEST(teste_construtor_completo_base64);
+    CPPUNIT_TEST(teste_assinatura_cms_attached_pkcs12_com_senha);
     CPPUNIT_TEST_SUITE_END();
 
 public:
 
     /*
-     * @brief Método para configurar o suite de testes
+     * @brief Teste para gerar assinatura utilizando algoritmo
+     *          CMS attached utilizando certificados encapsulados
+     *          em formato PKCS 12 com senha.
      */
-    void setUp() override;
-
-    /*
-     * @brief Método para liberar os recursos do suite de testes
-     */
-    void tearDown() override;
-
-    /*
-     * @brief Teste instanciando o CMSSigner com construtor sem
-     *          parâmetros e gerando arquivo de assinatura em
-     *          em disco.
-     */
-    void teste_construtor_basico_arquivo_assinatura();
-
-    /*
-     * @brief Teste instanciando o CMSSigner passando path para
-     *          o arquivo a ser assinado, certificado e chave
-     *          privada para o construtor e gerando arquivo de
-     *          assinatura em disco.
-     */
-    void teste_construtor_completo_arquivo_assinatura();
-
-    /*
-     * @brief Teste instanciando o CMSSigner com construtor sem
-     *          parâmetros retornando assinatura em base 64 na
-     *          memória.
-     */
-    void teste_construtor_basico_base64();
-
-    /*
-     * @brief Teste instanciando o CMSSigner passando path para
-     *          o arquivo a ser assinado, certificado e chave
-     *          privada para o construtor retornando assinatura
-     *          em base 64 na memória.
-     */
-    void teste_construtor_completo_base64();
-private:
-    std::unique_ptr<Data::POCO::PKCS12POCO> pkcs12_poco_; ///< @brief Poco contendo certificado e chave priváda
+    void teste_assinatura_cms_attached_pkcs12_com_senha();
 };
 
 #endif /* TEST_PACKAGE_SRC_UNITTESTS_INCLUDE_CMSSIGNERTEST_H_ */
