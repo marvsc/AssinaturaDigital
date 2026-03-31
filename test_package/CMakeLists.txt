@@ -4,13 +4,14 @@ project(PackageTest CXX)
 find_package(assinaturadigital REQUIRED)
 find_package(cppunit CONFIG REQUIRED)
 find_package(Poco CONFIG REQUIRED)
+find_package(OpenSSL CONFIG REQUIRED)
 
 add_executable(example src/example.cpp)
-target_link_libraries(example assinaturadigital::assinaturadigital Poco::Poco)
+target_link_libraries(example openssl::openssl Poco::Poco assinaturadigital::assinaturadigital)
 
 add_executable(teste src/teste.cpp
                     src/UnitTests/src/CMSSignerTest.cpp)
-target_link_libraries(teste assinaturadigital::assinaturadigital cppunit::cppunit Poco::Poco)
+target_link_libraries(teste openssl::openssl Poco::Poco assinaturadigital::assinaturadigital cppunit::cppunit)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/resources/arquivos/doc.txt
 ${CMAKE_CURRENT_BINARY_DIR}/doc.txt
