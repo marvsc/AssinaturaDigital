@@ -20,9 +20,8 @@ void CMSSignerTest::teste_assinatura_cms_attached_pkcs12_com_senha() {
 
     // Assina o arquivo
     signer.assign(SIGNATURE_FILE_PATH);
-    std::string message("O arquivo ");
 
     // Verifica se o arquivo de assinatura foi gerado em disco
-    CPPUNIT_ASSERT_MESSAGE(message.append(SIGNATURE_FILE_PATH).append(" deveria existir").c_str(),
+    CPPUNIT_ASSERT_MESSAGE(CPPUNIT_PRINTF_MESSAGE("O arquivo %s deveria existir.", SIGNATURE_FILE_PATH),
             std::filesystem::exists(SIGNATURE_FILE_PATH));
 }

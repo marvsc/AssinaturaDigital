@@ -14,6 +14,15 @@
 #define PKCS12_ENVVAR_PASSWORD "PKCS12_ENVVAR_PASSWORD"
 #define FILE_TO_ASSIGN_PATH "doc.txt"
 #define SIGNATURE_FILE_PATH "signature.p7s"
+#define BUFFER_SIZE 256
+
+// Macro para criação de mensagens de erro
+#define CPPUNIT_PRINTF_MESSAGE(format, ...) \
+    ([&]() { \
+            char buffer[BUFFER_SIZE]; \
+            std::snprintf(buffer, BUFFER_SIZE, format, ##__VA_ARGS__); \
+            return std::string(buffer); \
+    }())
 
 
 #endif /* TEST_PACKAGE_SRC_UNITTESTS_INCLUDE_ASSINATURADIGITALMACROS_H_ */

@@ -10,6 +10,10 @@
 
 #include <stdexcept>
 
+#include <openssl/pkcs7.h>
+
+#include <Poco/Crypto/X509Certificate.h>
+
 /*
  * @class OpenSSLUtils
  * @brief Utilidades para o OpenSSL.
@@ -45,6 +49,42 @@ public:
      * @return String decodificada.
      */
     static std::string base64_decode(const std::string& input);
+
+    /*
+     * @brief Obtém a cadeia de certificados da autoridade certificadora que gerou o certificado.
+     *
+     * @param[in] certificate Certificado emitido.
+     *
+     * @return Cadeia de certificados da autoridade certificadora emissora do certificado.
+     */
+    static Poco::Crypto::X509Certificate::List get_ca_cert_chain(const X509* certificate);
+private:
+    /*
+     * @brief Obtém o url do certificado da autoridade certificadora.
+     *
+     * @param[in] certificate Certificado gerado pela autoridade certificadora.
+     *
+     * @return Url para download do certificado a autoridade certificadora.
+     */
+    static const std::string get_issuer_uri(const X509* certificate);
+
+    /*
+     * @brief Efetua download do certificado da autoridade certificadora e mantém em memória.
+     *
+     * @param[in] url Url para download do certificado da autoridade certificadora.
+     *
+     * @return Buffer com o certificado da autoridade certificadora.
+     */
+    static const std::vector<char> download_cacert(const std::string& url);
+
+    /*
+     * @brief Obtém a estrutura PKCS 7 a partir de um buffer.
+     *
+     * @param[in] buffer PKCS 7 em um buffer.
+     *
+     * @return Estrutura PKCS 7.
+     */
+    static PKCS7* pkcs7_buffert_to_structure(const std::vector<char>& buffer);
 };
 
 #endif /* INCLUDE_OPENSSLUTILS_H_ */

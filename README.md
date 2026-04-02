@@ -17,7 +17,7 @@
 
 ## 📖 Sobre
 
-Faz assinatura digital de arquivo utilizando algoritmo Cryptographic Message Syntax (CMS) incluindo o conteúdo da mensagem dentro da estrutura da assinatura (attached) e ainda expõe algumas utilidades para criptografia como por exemplo decodificação base 64 e decodificação de string em algoritmo AES com chave de 256 bits e modo Cipher Block Chaining (CBC).
+Faz assinatura digital de arquivo utilizando algoritmo Cryptographic Message Syntax (CMS) incluindo o conteúdo da mensagem dentro da estrutura da assinatura (attached) e ainda expõe algumas utilidades para criptografia como por exemplo decodificação base 64, decodificação de string em algoritmo AES com chave de 256 bits e modo Cipher Block Chaining (CBC) e obtenção de cadeia de certificados da autoridade certificadora a partir de um certificado emitido por ela.
 
 ## ✨ Funcionalidades
 
@@ -25,6 +25,7 @@ Faz assinatura digital de arquivo utilizando algoritmo Cryptographic Message Syn
 - [x] Assinatura digital de arquivo em algoritmo CMS attached em memória (base 64)
 - [x] Decodificação de string em base 64
 - [x] Decodificação de string em base 64 e algoritmo AES-256-CBC
+- [x] Obtenção de cadeia de certificados da autoridade certificadorfa a partir de um certificado emitido por ela
 
 ## 🛠️ Pré-requisitos gerais
 

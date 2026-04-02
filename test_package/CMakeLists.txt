@@ -10,7 +10,8 @@ add_executable(example src/example.cpp)
 target_link_libraries(example openssl::openssl Poco::Poco assinaturadigital::assinaturadigital)
 
 add_executable(teste src/teste.cpp
-                    src/UnitTests/src/CMSSignerTest.cpp)
+                    src/UnitTests/src/CMSSignerTest.cpp
+                    src/UnitTests/src/OpenSSLUtilsTest.cpp)
 target_link_libraries(teste openssl::openssl Poco::Poco assinaturadigital::assinaturadigital cppunit::cppunit)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/resources/arquivos/doc.txt
