@@ -118,11 +118,11 @@ Poco::Crypto::X509Certificate::List OpenSSLUtils::get_ca_cert_chain(const X509* 
     for (int i = 0; i < certificate_chain_size; i++) {
 
         // Obtém o certificado.
-        Poco::Crypto::X509Certificate certificate(sk_X509_value(certificate_chain, i));
+        X509* certificate = sk_X509_value(certificate_chain, i);
         int crit = -1;
 
         // Obtém as restrições básicas contidas na extenção do certificado.
-        std::unique_ptr<BASIC_CONSTRAINTS, decltype(&BASIC_CONSTRAINTS_free)> basic_constraints((BASIC_CONSTRAINTS*) X509_get_ext_d2i(certificate.certificate(),
+        std::unique_ptr<BASIC_CONSTRAINTS, decltype(&BASIC_CONSTRAINTS_free)> basic_constraints((BASIC_CONSTRAINTS*) X509_get_ext_d2i(certificate,
                 NID_basic_constraints, &crit, nullptr), BASIC_CONSTRAINTS_free);
 
         // Se não houver restrições básicas ou não indicar autoridade certificadora nas restrições
@@ -132,7 +132,7 @@ Poco::Crypto::X509Certificate::List OpenSSLUtils::get_ca_cert_chain(const X509* 
         }
 
         // Adiciona o certificado da autoridade certificadora a cadeia de certificados.
-        cacert_chain.push_back(certificate);
+        cacert_chain.push_back(Poco::Crypto::X509Certificate(certificate));
     }
     return cacert_chain;
 }
