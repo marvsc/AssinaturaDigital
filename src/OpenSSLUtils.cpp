@@ -132,7 +132,7 @@ Poco::Crypto::X509Certificate::List OpenSSLUtils::get_ca_cert_chain(const X509* 
         }
 
         // Adiciona o certificado da autoridade certificadora a cadeia de certificados.
-        cacert_chain.push_back(Poco::Crypto::X509Certificate(certificate));
+        cacert_chain.push_back(Poco::Crypto::X509Certificate(X509_dup(certificate)));
     }
     return cacert_chain;
 }
