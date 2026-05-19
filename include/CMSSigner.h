@@ -75,6 +75,11 @@ private:
      * @param[in] buffer Buffer onde será gerada a assinatura CMS.
      */
     void assign(BIO* buffer) const;
+
+    /*
+     * @brief Classe de testes definida como amiga para acessar métodos e atributos privados.
+     */
+    friend class CMSSignerTest;
 };
 
 #endif /* INCLUDE_CMSSIGNER_H_ */

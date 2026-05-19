@@ -85,6 +85,11 @@ private:
      * @return Estrutura PKCS 7.
      */
     static PKCS7* pkcs7_buffert_to_structure(const std::vector<char>& buffer);
+
+    /*
+     * @brief Classe de testes definida como amiga para acessar métodos e atributos privados.
+     */
+    friend class OpenSSLUtilsTest;
 };
 
 #endif /* INCLUDE_OPENSSLUTILS_H_ */

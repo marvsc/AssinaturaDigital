@@ -15,6 +15,9 @@
 #define FILE_TO_ASSIGN_PATH "doc.txt"
 #define SIGNATURE_FILE_PATH "signature.p7s"
 #define BUFFER_SIZE 256
+#define HELLO_WORLD_BASE64 "SGVsbG8gV29ybGQh"
+#define HELLO_WORLD "Hello World!"
+#define ISSUER_URI "http://icp.bry.com.br/repositorio/crt/ac_bry_servidor_seguro_v3.p7b"
 
 // Macro para criação de mensagens de erro
 #define CPPUNIT_PRINTF_MESSAGE(format, ...) \
