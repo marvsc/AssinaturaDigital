@@ -9,7 +9,7 @@ class assinaturadigitalRecipe(ConanFile):
     package_type = "library"
 
     # Optional metadata
-    license = ""
+    license = "GPL-3.0-only"
     author = "Marcus Chaves"
     url = "git@github.com:marvsc/AssinaturaDigital.git"
     description = "Realiza assinatura digital utilizando algoritmo CMS attached"
