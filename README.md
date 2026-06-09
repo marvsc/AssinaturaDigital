@@ -46,7 +46,7 @@ Faz assinatura digital de arquivo utilizando algoritmo Cryptographic Message Syn
     tar zxvf libassinaturadigital-v<versão>.tgz -C <diretório a descompactar>
     ```
 
-### 🛆 CMake
+### 📜 CMake
 
 1. Clonar o projeto:
 
