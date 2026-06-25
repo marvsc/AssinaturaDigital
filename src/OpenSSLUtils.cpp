@@ -50,19 +50,14 @@ std::string OpenSSLUtils::base64_decode(const std::string& input) {
     // Calcula o tamanho aproximado da string decodificada que deve ser 3/4 +1 do tamanho
     // da string codificada.
     std::size_t output_buffer_length = ((input.length() * 3) / 4) + 1;
-    unsigned char* output_buffer = new unsigned char[output_buffer_length];
-    if (!output_buffer) {
-        throw std::runtime_error("Erro alocando buffer");
-    }
+    std::unique_ptr<unsigned char[]> output_buffer(new unsigned char[output_buffer_length]);
 
     // Decodifica a string em base 64.
-    std::size_t output_length = BIO_read(input_buffer.get(), output_buffer, output_buffer_length);
+    std::size_t output_length = BIO_read(input_buffer.get(), output_buffer.get(), output_buffer_length);
     if (output_length < 0) {
-        delete output_buffer;
-        output_buffer = nullptr;
         openssl_error_handling("Erro decodificando base 64: ");
     }
-    std::string output(reinterpret_cast<const char*>(output_buffer), output_length);
+    std::string output(reinterpret_cast<const char*>(output_buffer.get()), output_length);
     return output;
 }
 

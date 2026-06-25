@@ -12,7 +12,7 @@ class assinaturadigitalTestConan(ConanFile):
     def requirements(self):
         self.requires(self.tested_reference_str)
         self.requires("cppunit/[>=1.15.1]")
-        self.requires("openssl/[>3.5.0]")
+        self.requires("openssl/[>3.5.0 <4.0.0]")
         self.requires("poco/[>1.11.0]")
 
     def build(self):

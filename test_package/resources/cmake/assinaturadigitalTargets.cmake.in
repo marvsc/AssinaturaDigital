@@ -1,0 +1,16 @@
+# Minimal imported target to link against the installed static library
+# Adjusted to point to the installed files in this prefix.
+
+if(NOT TARGET assinaturadigital::assinaturadigital)
+  add_library(assinaturadigital::assinaturadigital STATIC IMPORTED)
+  # compute install prefix from this config file location, then build absolute paths
+  get_filename_component(_assinaturadigital_prefix @ASSINATURA_DIGITAL_PREFIX@ ABSOLUTE)
+  set(_assinaturadigital_lib_abs "${_assinaturadigital_prefix}/lib/libassinaturadigital.a")
+  # compute absolute include dir path to avoid "non-existent path" checks
+  # the install layout places headers in <prefix>/include, so go up three levels
+  get_filename_component(_assinaturadigital_include_dir "${_assinaturadigital_prefix}/include" ABSOLUTE)
+  set_target_properties(assinaturadigital::assinaturadigital PROPERTIES
+    IMPORTED_LOCATION "${_assinaturadigital_lib_abs}"
+    INTERFACE_INCLUDE_DIRECTORIES "${_assinaturadigital_include_dir}"
+  )
+endif()
