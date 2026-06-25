@@ -1,6 +1,15 @@
 cmake_minimum_required(VERSION 3.15)
 project(PackageTest CXX)
 
+set(ASSINATURA_DIGITAL_PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/../build/install)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/resources/cmake/assinaturadigitalTargets.cmake.in
+${CMAKE_CURRENT_BINARY_DIR}/cmake/assinaturadigitalTargets.cmake
+@ONLY)
+
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/resources/cmake/assinaturadigitalConfig.cmake
+${CMAKE_CURRENT_BINARY_DIR}/cmake/assinaturadigitalConfig.cmake
+COPYONLY)
+
 find_package(assinaturadigital REQUIRED)
 find_package(cppunit CONFIG REQUIRED)
 find_package(Poco CONFIG REQUIRED)
