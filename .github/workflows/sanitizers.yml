@@ -1,8 +1,6 @@
 name: Sanitizers
 
 on:
-  push:
-    branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
 
@@ -98,10 +96,3 @@ jobs:
             echo "ERRO: No test binary found; skipping run"
             exit 1
           fi
-
-      - name: Upload sanitizer logs (if any)
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: sanitizer-logs-${{ matrix.sanitizer }}
-          path: build/
