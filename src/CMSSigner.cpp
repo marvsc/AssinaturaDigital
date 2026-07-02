@@ -2,6 +2,7 @@
 #include "CMSSigner.h"
 
 #include "../include/OpenSSLUtils.h"
+#include "../include/CryptoInitializer.h"
 
 #include <stdexcept>
 
@@ -10,10 +11,12 @@
 
 CMSSigner::CMSSigner(const std::string &file_to_assign, const std::string& pkcs12_path) :
         file_to_assign_(file_to_assign), container_(pkcs12_path) {
+    CryptoInitializer::ensure();
 }
 
 CMSSigner::CMSSigner(const std::string& file_to_assign, const std::string& pkcs12_path, const std::string& password) :
         file_to_assign_(file_to_assign), container_(pkcs12_path, password) {
+    CryptoInitializer::ensure();
 }
 
 void CMSSigner::assign(BIO* buffer) const {
