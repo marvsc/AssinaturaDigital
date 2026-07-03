@@ -1,14 +1,21 @@
 
 #include "../include/CryptoInitializer.h"
 
+#include <openssl/err.h>
+
 #include <Poco/Crypto/Crypto.h>
 
 CryptoInitializer::CryptoInitializer() {
     // Inicializa a biblioteca de criptografia da Poco
     Poco::Crypto::initializeCrypto();
+}
 
-    // Registra a função de finalização da biblioteca de criptografia da Poco
-    std::atexit([]() { Poco::Crypto::uninitializeCrypto(); });
+CryptoInitializer::~CryptoInitializer() {
+    // Limpa estados de erro do OpenSSL
+    OPENSSL_thread_stop();
+
+    // Finaliza a biblioteca de criptografia da Poco
+    Poco::Crypto::uninitializeCrypto();
 }
 
 void CryptoInitializer::ensure() {

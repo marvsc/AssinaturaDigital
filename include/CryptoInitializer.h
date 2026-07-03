@@ -21,6 +21,11 @@ public:
     CryptoInitializer(const CryptoInitializer&) = delete;
 
     /*
+     * @brief Destrói a classe.
+     */
+    virtual ~CryptoInitializer();
+
+    /*
      * @brief Impede a atribuição da classe.
      */
     CryptoInitializer& operator=(const CryptoInitializer&) = delete;
@@ -35,11 +40,6 @@ private:
      * @brief Constrói a classe e inicializa a biblioteca de criptografia.
      */
     CryptoInitializer();
-
-    /*
-     * @brief Não permite a destruição da classe fora do escopo.
-     */
-    virtual ~CryptoInitializer() = default;
 };
 
 #endif /* INCLUDE_CRYPTOINITIALIZER_H_ */
