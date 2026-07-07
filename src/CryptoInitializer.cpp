@@ -1,7 +1,7 @@
 
 #include "../include/CryptoInitializer.h"
 
-#include <openssl/err.h>
+#include <openssl/crypto.h>
 
 #include <Poco/Crypto/Crypto.h>
 
@@ -12,7 +12,7 @@ CryptoInitializer::CryptoInitializer() {
 
 CryptoInitializer::~CryptoInitializer() {
     // Limpa estados de erro do OpenSSL
-    OPENSSL_thread_stop();
+    OPENSSL_cleanup();
 
     // Finaliza a biblioteca de criptografia da Poco
     Poco::Crypto::uninitializeCrypto();
