@@ -1,8 +1,8 @@
 /.cproject
 /.project
-/test_package/CMakeUserPresets.json
 /test_package/build/
 /.settings/
 /.pydevproject
-/CMakeUserPresets.json
 /build/
+/.vscode/
+/.vsconan/
