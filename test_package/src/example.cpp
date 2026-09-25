@@ -9,6 +9,10 @@
 #include <string>
 #include <unistd.h>
 
+/*
+* Uso: ./example -f <arquivo> -p <senha> -o <arquivo_assinatura> -x <arquivo_pkcs12>
+* Exemplo: ./example -f arquivo.txt -p senha123 -o assinatura.txt -x certificado.p12
+*/
 int main(const int argc, char *const argv[]) {
     int opt;
     std::string pkcs12_file("");
@@ -66,8 +70,17 @@ int main(const int argc, char *const argv[]) {
 
         // Gerando arquivo de assinatura
         signer.assign(signature_file);
-    } catch (std::exception& e) {
+    } catch (Poco::Exception& e) {
+        std::printf("Erro na biblioteca poco: %s\n", e.displayText().c_str());
+        return EXIT_FAILURE;
+    } catch (std::runtime_error& e) {
         std::printf("Erro de execução: %s\n", e.what());
+        return EXIT_FAILURE;
+    } catch (std::exception& e) {
+        std::printf("Erro inseperado: %s\n", e.what());
+        return EXIT_FAILURE;
+    } catch (...) {
+        std::printf("Erro genérico\n");
         return EXIT_FAILURE;
     }
     return EXIT_SUCCESS;
