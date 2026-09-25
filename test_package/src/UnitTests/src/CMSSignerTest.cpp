@@ -58,3 +58,38 @@ void CMSSignerTest::teste_assinatura_cms_attached_buffer_pkcs12_com_senha() {
             buffer_pointer && buffer_pointer->length > 0 && buffer_pointer->data);
 }
 
+void CMSSignerTest::teste_assinatura_cms_attached_pkcs12_inexistente() {
+    std::unique_ptr<CMSSigner> signer;
+
+    // Passa um path inexistente para o arquivo PKCS 12 e espera que seja lançada uma exceção
+    CPPUNIT_ASSERT_THROW_MESSAGE("Deveria ter lançado exceção de arquivo PKCS 12 inexistente",
+            signer.reset(new CMSSigner(FILE_TO_ASSIGN_PATH, PKCS12_FILE_INEXISTENTE_PATH)),
+            Poco::OpenFileException);
+}
+
+void CMSSignerTest::teste_assinatura_cms_attached_senha_invalida() {
+    std::unique_ptr<CMSSigner> signer;
+
+    // Passa uma senha inválida para o arquivo PKCS 12 e espera que seja lançada uma exceção
+    CPPUNIT_ASSERT_THROW_MESSAGE("Deveria ter lançado exceção de senha inválida",
+            signer.reset(new CMSSigner(FILE_TO_ASSIGN_PATH, PKCS12_FILE_PATH, "senha_invalida")),
+            Poco::Crypto::CryptoException);
+}
+
+void CMSSignerTest::teste_assinatura_cms_attached_path_inexistente() {
+    // Decripta a senha obtida em uma variável de ambiente
+    CMSSigner signer(FILE_TO_ASSIGN_PATH, PKCS12_FILE_PATH, OpenSSLUtils::decrypt_aes_256_cbc(std::getenv(PKCS12_ENVVAR_PASSWORD),
+            AES_KEY, reinterpret_cast<const unsigned char*>(AES_INITIALIZATION_VECTOR)));
+
+    CPPUNIT_ASSERT_THROW_MESSAGE("Deveria ter lançado exceção de path inexistente",
+            signer.assign("path_inexistente/signature.p7s"), std::runtime_error);
+}
+
+void CMSSignerTest::teste_assinatura_cms_attached_path_inacessivel() {
+    // Decripta a senha obtida em uma variável de ambiente
+    CMSSigner signer(FILE_TO_ASSIGN_PATH, PKCS12_FILE_PATH, OpenSSLUtils::decrypt_aes_256_cbc(std::getenv(PKCS12_ENVVAR_PASSWORD),
+            AES_KEY, reinterpret_cast<const unsigned char*>(AES_INITIALIZATION_VECTOR)));
+
+    CPPUNIT_ASSERT_THROW_MESSAGE("Deveria ter lançado exceção de path inacessível",
+            signer.assign("/root/signature.p7s"), std::runtime_error);
+}

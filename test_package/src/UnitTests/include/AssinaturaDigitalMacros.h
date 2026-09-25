@@ -18,6 +18,7 @@
 #define HELLO_WORLD_BASE64 "SGVsbG8gV29ybGQh"
 #define HELLO_WORLD "Hello World!"
 #define ISSUER_URI "http://icp.bry.com.br/repositorio/crt/ac_bry_servidor_seguro_v3.p7b"
+#define PKCS12_FILE_INEXISTENTE_PATH "certificado_inexistente.pfx"
 
 // Macro para criação de mensagens de erro
 #define CPPUNIT_PRINTF_MESSAGE(format, ...) \
