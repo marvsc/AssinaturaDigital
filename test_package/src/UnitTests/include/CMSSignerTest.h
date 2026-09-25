@@ -1,4 +1,4 @@
-/*
+/**
  * @file CMSSignerTest.h
  * @brief Declaração da classe CMSSignerTest
  * @author Marcus Chaves
@@ -14,7 +14,7 @@
 
 #include <cppunit/extensions/HelperMacros.h>
 
-/*
+/**
  * @class CMSSignerTest
  * @brief Classe de testes unitários para o CMSSigner
  */
@@ -25,18 +25,22 @@ class CMSSignerTest : public CppUnit::TestFixture {
     CPPUNIT_TEST(teste_assinatura_cms_attached_disco_pkcs12_com_senha);
     CPPUNIT_TEST(teste_assinatura_cms_attached_memoria_pkcs12_com_senha);
     CPPUNIT_TEST(teste_assinatura_cms_attached_buffer_pkcs12_com_senha);
+    CPPUNIT_TEST(teste_assinatura_cms_attached_pkcs12_inexistente);
+    CPPUNIT_TEST(teste_assinatura_cms_attached_senha_invalida);
+    CPPUNIT_TEST(teste_assinatura_cms_attached_path_inexistente);
+    CPPUNIT_TEST(teste_assinatura_cms_attached_path_inacessivel);
     CPPUNIT_TEST_SUITE_END();
 
 public:
 
-    /*
+    /**
      * @brief Teste para gerar assinatura em disco utilizando
      *          algoritmo CMS attached utilizando certificados
      *          encapsulados em formato PKCS 12 com senha.
      */
     void teste_assinatura_cms_attached_disco_pkcs12_com_senha();
 
-    /*
+    /**
      * @brief Teste para gerar assinatura em memória utilizando
      *          algoritmo CMS attached em base 64 utilizando
      *          certificados encapsulados em formato PKCS 12
@@ -44,13 +48,35 @@ public:
      */
     void teste_assinatura_cms_attached_memoria_pkcs12_com_senha();
 
-    /*
+    /**
      * @brief Teste para gerar assinatura em buffer de memória
      *          utilizando algoritmo CMS attached utilizando
      *          certificados encapsulados em formato PKCS 12
      *          com senha.
      */
     void teste_assinatura_cms_attached_buffer_pkcs12_com_senha();
+
+    /**
+     * @brief Teste passando path do PKCS 12 inexistente para o
+     *         construtor da classe CMSSigner.
+     */
+    void teste_assinatura_cms_attached_pkcs12_inexistente();
+
+    /**
+     * @brief Teste passando senha inválida para o construtor
+     *          da classe CMSSigner.
+     */
+    void teste_assinatura_cms_attached_senha_invalida();
+
+    /**
+     * @brief Teste gerando assinatura em path inexistente.
+     */
+    void teste_assinatura_cms_attached_path_inexistente();
+
+    /**
+     * @brief Teste gerando assinatura em path inacessível.
+     */
+    void teste_assinatura_cms_attached_path_inacessivel();
 };
 
 #endif /* TEST_PACKAGE_SRC_UNITTESTS_INCLUDE_CMSSIGNERTEST_H_ */
