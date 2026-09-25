@@ -51,7 +51,7 @@ std::string CMSSigner::assign() const {
     // Pega o ponteiro para o buffer
     BIO_get_mem_ptr(memory_buffer.get(), &buffer_pointer);
     if (!buffer_pointer || buffer_pointer->length == 0) {
-        return "";
+        throw std::runtime_error("Não foi possível gerar a assinatura do arquivo " + file_to_assign_);
     }
 
     // Despeja o buffer em uma string
