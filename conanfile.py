@@ -13,7 +13,7 @@ class assinaturadigitalRecipe(ConanFile):
     author = "Marcus Chaves"
     url = "git@github.com:marvsc/AssinaturaDigital.git"
     description = "Realiza assinatura digital utilizando algoritmo CMS attached"
-    topics = ("", "", "")
+    topics = ("cms", "digital-signature", "criptografia")
 
     # Binary configuration
     settings = "os", "compiler", "build_type", "arch"
