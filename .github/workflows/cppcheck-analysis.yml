@@ -43,7 +43,7 @@ jobs:
         conan install . --build=missing -s build_type=Debug
 
         # Configura o projeto via cmake
-        cmake -S . -B build/Debug
+        cmake -S . -B build/Debug -DCMAKE_TOOLCHAIN_FILE=build/Debug/generators/conan_toolchain.cmake
 
     - name: Executar Cppcheck na análise estática de código
       run: |
