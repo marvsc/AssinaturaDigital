@@ -29,9 +29,11 @@ jobs:
 
     - name: Configurar ambiente
       run: |
-        mkdir -p build
-        cd build
-        cmake -DCMAKE_BUILD_TYPE=Debug ..
+        # Instala pendencias e gera os toolchains do cmake através do conan
+        conan install . --build=missing -s build_type=Debug
+
+        # Configura o projeto via cmake
+        cmake -S . -B build/Debug
 
     - name: Executar Cppcheck na análise estática de código
       run: |
