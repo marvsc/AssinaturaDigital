@@ -26,6 +26,16 @@ jobs:
       run: |
         sudo apt-get install -y build-essential cmake
         sudo apt-get install -y libssl-dev libpoco-dev
+    
+    - name: Install and Setup Conan
+      uses: conan-io/setup-conan@v1
+      with:
+          version: 2.25.2
+
+    - name: Configure Remote
+      run: |
+          conan remote add cloudsmith https://conan.cloudsmith.io/${{ github.actor }}/${{ secrets.CLOUDSMITH_WORKSPACE }}/
+          conan remote login cloudsmith ${{ secrets.CLOUDSMITH_USER }} -p ${{ secrets.CLOUDSMITH_TOKEN }}
 
     - name: Configurar ambiente
       run: |
