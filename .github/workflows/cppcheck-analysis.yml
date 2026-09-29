@@ -10,6 +10,9 @@ on:
 jobs:
   cppcheck-analysis:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
     
     steps:
     - name: Checkout código
@@ -144,6 +147,9 @@ jobs:
 
     - name: Gerar resumo para PR
       if: always()
+      env:
+        GH_TOKEN: ${{ github.token }}
+        PR_NUMBER: ${{ github.event.pull_request.number }}
       run: |
         echo "## 📊 Análise de Código com Cppcheck" > cppcheck-summary.md
         echo "### Resultados" >> cppcheck-summary.md
@@ -152,10 +158,10 @@ jobs:
         echo "- Repositório: ${{ github.repository }}" >> cppcheck-summary.md
         echo "" >> cppcheck-summary.md
         echo "### Como usar o Cppcheck localmente" >> cppcheck-summary.md
-        echo "```bash" >> cppcheck-summary.md
+        printf '%s\n' '```bash' >> cppcheck-summary.md
         echo "sudo apt-get install cppcheck" >> cppcheck-summary.md
         echo "cppcheck --enable=all --std=c++17 src/ include/ test_package/" >> cppcheck-summary.md
-        echo "```" >> cppcheck-summary.md
+        printf '%s\n' '```' >> cppcheck-summary.md
         echo "" >> cppcheck-summary.md
         echo "### Arquivos Gerados" >> cppcheck-summary.md
         echo "- [Relatório HTML](cppcheck-report.html)" >> cppcheck-summary.md
@@ -163,7 +169,7 @@ jobs:
         
         # Adicionar comentário no PR se for um pull request
         if [ "${{ github.event_name }}" = "pull_request" ]; then
-          gh pr comment "$GITHUB_REF" --body-file cppcheck-summary.md
+          gh pr comment "$PR_NUMBER" --body-file cppcheck-summary.md
         fi
 
     - name: Notificar sobre falhas
