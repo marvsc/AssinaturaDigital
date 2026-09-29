@@ -120,6 +120,7 @@ jobs:
         fi
 
     - name: Carregar relatório HTML
+      id: upload-html-report
       uses: actions/upload-artifact@v4
       if: always()
       with:
@@ -128,6 +129,7 @@ jobs:
         retention-days: 30
 
     - name: Carregar relatório XML
+      id: upload-xml-report
       uses: actions/upload-artifact@v4
       if: always()
       with:
@@ -150,6 +152,8 @@ jobs:
       env:
         GH_TOKEN: ${{ github.token }}
         PR_NUMBER: ${{ github.event.pull_request.number }}
+        HTML_REPORT_URL: ${{ steps.upload-html-report.outputs.artifact-url }}
+        XML_REPORT_URL: ${{ steps.upload-xml-report.outputs.artifact-url }}
       run: |
         echo "## 📊 Análise de Código com Cppcheck" > cppcheck-summary.md
         echo "### Resultados" >> cppcheck-summary.md
@@ -164,8 +168,8 @@ jobs:
         printf '%s\n' '```' >> cppcheck-summary.md
         echo "" >> cppcheck-summary.md
         echo "### Arquivos Gerados" >> cppcheck-summary.md
-        echo "- [Relatório HTML](cppcheck-report.html)" >> cppcheck-summary.md
-        echo "- [Relatório XML](cppcheck-report.xml)" >> cppcheck-summary.md
+        echo "- [Relatório HTML]($HTML_REPORT_URL)" >> cppcheck-summary.md
+        echo "- [Relatório XML]($XML_REPORT_URL)" >> cppcheck-summary.md
         
         # Adicionar comentário no PR se for um pull request
         if [ "${{ github.event_name }}" = "pull_request" ]; then
