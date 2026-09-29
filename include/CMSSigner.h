@@ -43,7 +43,7 @@ public:
     /*
      * @brief Destrói a classe.
      */
-    virtual ~CMSSigner() {}
+    ~CMSSigner() = default;
 
     /*
      * @brief Assina o arquivo definido no atributo file_to_assign_ e gera um aquivo
