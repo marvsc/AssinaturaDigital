@@ -122,7 +122,7 @@ Faz assinatura digital de arquivo utilizando algoritmo Cryptographic Message Syn
 3. Criar o projeto utilizando conan:
 
     ```bash
-    conan create . --build=missing
+    conan create . --build=missing --version=v0.0.1
     ```
 
 > [!NOTE]
